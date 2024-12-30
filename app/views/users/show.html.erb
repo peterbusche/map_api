@@ -1,0 +1,21 @@
+<h1><%= @user.username %>'s Profile</h1>
+<p>Email: <%= @user.email %></p>
+<h2>Uploaded Images</h2>
+<ul>
+  <% @user.images.each do |image| %>
+    <li>
+      <%= image_tag(image.image_path, alt: "Uploaded Image", skip_pipeline: true) %>
+      Coordinates: (<%= image.latitude %>, <%= image.longitude %>)
+    </li>
+  <% end %>
+</ul>
+
+<% if session[:user_id] == @user.id %>
+  <%= link_to "Upload New Image", new_user_image_path(@user), class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "Back to Users", users_path, class: "btn btn-secondary" %>
+<% if session[:user_id] %>
+  <%= link_to "Logout", logout_path, method: :delete, class: "btn btn-danger" %>
+<% end %>
+

@@ -1,0 +1,27 @@
+<h1>Create a New User</h1>
+<%= form_with model: @user, local: true do |form| %>
+  <p>
+    <%= form.label :username %><br>
+    <%= form.text_field :username %>
+  </p>
+  <p>
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+  </p>
+  <p>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %>
+  </p>
+  <p>
+    <%= form.label :password_confirmation %><br>
+    <%= form.password_field :password_confirmation %>
+  </p>
+  <p>
+    <%= form.submit "Create User" %>
+  </p>
+<% end %>
+
+<%= link_to "Back to Users", users_path, class: "btn btn-secondary" %>
+<% if session[:user_id] %>
+  <%= link_to "Logout", logout_path, method: :delete, class: "btn btn-danger" %>
+<% end %>
