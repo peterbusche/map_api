@@ -16,6 +16,9 @@
 
 <%= link_to "Back to Users", web_users_path, class: "btn btn-secondary" %>
 <% if session[:user_id] %>
-  <%= link_to "Logout", web_logout_path, method: :delete, class: "btn btn-danger" %>
+  <%= form_with url: web_logout_path, method: :delete, local: true do %>
+    <%= submit_tag "Logout", class: "btn btn-danger" %>
+  <% end %>
+
 <% end %>
 

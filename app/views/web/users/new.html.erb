@@ -1,5 +1,5 @@
 <h1>Create a New User</h1>
-<%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user, url:web_users_path, local: true do |form| %>
   <p>
     <%= form.label :username %><br>
     <%= form.text_field :username %>

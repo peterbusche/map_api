@@ -17,8 +17,12 @@
   </p>
 <% end %>
 
-<%= link_to "Back to All Images", web_images_path, class: "btn btn-secondary" %>
+<%= link_to "All Users", web_users_path, class: "btn btn-secondary" %>
+<%= link_to "Profile", web_user_path(session[:user_id]), class: "btn btn-secondary" %>
+
 
 <% if session[:user_id] %>
-  <%= link_to "Logout", web_logout_path, method: :delete, class: "btn btn-danger" %>
+  <%= form_with url: web_logout_path, method: :delete, local: true do %>
+    <%= submit_tag "Logout", class: "btn btn-danger" %>
+  <% end %>
 <% end %>

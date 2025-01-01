@@ -7,14 +7,14 @@
   <% end %>
 </ul>
 
-<%= link_to "Create New User", new_web_user_path %>
-<%= link_to "View All Images", web_images_path, class: "btn btn-secondary" %>
 
 <% if session[:user_id] %>
-  <!-- Show upload button only if logged in -->
   <%= link_to "Upload New Image", new_web_user_image_path(session[:user_id]), class: "btn btn-success" %>
-  <%= link_to "Logout", web_logout_path, method: :delete, class: "btn btn-danger" %>
+  <%= form_with url: web_logout_path, method: :delete, local: true do %>
+    <%= submit_tag "Logout", class: "btn btn-danger" %>
+  <% end %>
+
 <% else %>
-  <!-- Show login button if not logged in -->
+  <%= link_to "Create New User", new_web_user_path %>
   <%= link_to "Login", web_login_path, class: "btn btn-warning" %>
 <% end %>
