@@ -1,26 +1,39 @@
 # ============= RAILS HAS STRICT NAMING CONVENTIONS TO MAKE ROUTES EASIER=================
 # consult these naming conventions before writing database schema/making models
+# 
+
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # ================= WEB ROUTES ===================
+  namespace :web do
+    # Routes for users
+    resources :users, only: [:index, :show, :create, :new] do
+      # Nested routes for images belonging to a specific user
+      resources :images, only: [:index, :create, :new]
+    end
 
-  # Define routes for users
+    # Routes for standalone image actions
+    resources :images, only: [:index, :show, :new]
 
-  resources :users, only: [:index, :show, :create, :new] do
-    # Nested routes for images belonging to a specific user
-    resources :images, only: [:index, :create, :new]
+    # Session management routes
+    get '/login', to: 'sessions#new', as: :login
+    post '/login', to: 'sessions#create', defaults: {format: :json}
+    delete '/logout', to: 'sessions#destroy', as: :logout
+
+    # Root path for the web namespace
+    root "users#index"
   end
 
-  # Define routes for standalone image actions
-  resources :images, only: [:index, :show, :new]
+  # ================= API ROUTES ===================
+  namespace :api do
+    # Define API-specific routes here
+    resources :users, only: [:show, :create]
+    resources :images, only: [:index, :create]
+    post '/login', to: 'sessions#create', defaults: { format: :json }
+  end
 
-  get '/login', to: 'sessions#new', as: :login
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy', as: :logout
-
-  # Health check route
+  # ================= COMMON ROUTES ===================
+  # Health check route (common across web and API)
   get '/ping', to: 'health#ping'
-
-  # Root path
-  root "users#index" 
 end
+

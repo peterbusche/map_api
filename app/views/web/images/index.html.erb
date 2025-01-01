@@ -1,0 +1,16 @@
+<h1>All Images</h1>
+<ul>
+  <% @images.each do |image| %>
+    <li>
+      <%= link_to image.image_path, web_image_path(image) %> - (<%= image.latitude %>, <%= image.longitude %>)
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to Users", web_users_path, class: "btn btn-secondary" %>
+<% if session[:user_id] %>
+  <%= link_to "Upload New Image", new_web_user_image_path(session[:user_id]), class: "btn btn-success" %>
+  <%= link_to "Logout", web_logout_path, method: :delete, class: "btn btn-danger" %>
+<% else %>
+  <%= link_to "Login", web_login_path, class: "btn btn-warning" %>
+<% end %>
